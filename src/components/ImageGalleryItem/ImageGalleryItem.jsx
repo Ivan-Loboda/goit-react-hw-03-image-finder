@@ -1,25 +1,33 @@
 import PropTypes from 'prop-types';
 import s from './ImageGalleryItem.module.css';
 
-const ImageGalleryItem = ({ }) => {
+export function ImageGalleryItem({ image: { webformatURL, largeImageURL, tags }, onShowModal }) {
     return (
-        <li className={s.ImageGalleryItem}>
+        <li
+            className={s.ImageGalleryItem}
+            onClick={() =>
+                onShowModal({
+                    modalImage: {
+                        largeImageURL,
+                        tags
+                    }
+                })
+            }>
             <img
                 src={webformatURL}
                 alt={tags}
-                onClick={onClick}
-                className={s.ImageGalleryItemImage}
-                width="200"
-                height="150"
-            />
+                className={s.ImageGalleryItem_image} />
         </li>
-    )
-}
-
-export default ImageGalleryItem;
+    );
+};
 
 ImageGalleryItem.propTypes = {
-    src: PropTypes.string,
-    alt: PropTypes.string,
-    onClick: PropTypes.func.isRequired,
+    image: PropTypes.shape({
+        webformatURL: PropTypes.string.isRequired,
+        largeImageURL: PropTypes.string.isRequired,
+        tags: PropTypes.string.isRequired,
+    }).isRequired,
+    onShowModal: PropTypes.func.isRequired,
 };
+
+export default ImageGalleryItem;
